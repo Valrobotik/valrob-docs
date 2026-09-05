@@ -4,10 +4,12 @@ sidebar_position: 1
 
 # Soudure
 
+Atelier d'introduction à la soudure électronique
+
 ## Objectifs de l'atelier
 
 - Savoir identifier et réaliser une soudure correcte
-- Avoir les bons réflexes d'utilisation et de maintenance de fer à soudure
+- Avoir les bons réflexes d'utilisation et de maintenance du fer à souder
 - Comprendre quand utiliser du flux
 
 ## Matériel requis
@@ -15,11 +17,11 @@ sidebar_position: 1
 - Fer à souder
 - Étain
 - Laine pour nettoyer la panne
-- flux en stylo/rosin
-- plaquette à trous/PCB
+- Flux en stylo / rosin flux
+- Plaquette à trous / PCB
 - Connecteurs JST
-- Headers 2.54mm
-- Leds/Résistances THT
+- Headers 2.54 mm
+- LEDs / résistances THT
 - Pompe à dessouder
 
 ## Informations
@@ -28,64 +30,91 @@ sidebar_position: 1
 
 #### Tenue du fer
 
-![Mauvaise tenu du fer](./img/soudure/wrong-hold.jpeg)
+![Mauvaise tenue du fer](./img/soudure/wrong-hold.jpeg)
 
 :::danger
-
-Plus sérieusement, faites particulièrement faire attention où l'on pose le fer chaud
-
+Plus sérieusement, faites particulièrement attention à **où l'on pose le fer chaud** (toujours sur son support) et **où l'on pose la main** quand on attrape un objet posé sur la table.
 :::
 
 #### Conduction de chaleur
 
 :::danger
-
-Les composants métalliques conduisent très rapidement la chaleur (quelques secondes). Attention par où vous tenez ce que vous êtes en train de souder, un fil ou un pin devient brûlant très vite.
-
+Les composants métalliques conduisent très rapidement la chaleur (quelques secondes). Attention par où vous tenez ce que vous êtes en train de souder : un fil ou une pin devient brûlant très vite.
 :::
-
 
 ### 1. Protection de la panne du fer à souder
 
-Il est nécessaire de garder la panne du fer recouvert d'étain en permanence, que le fer soit allumé ou éteint.
+Il est nécessaire de garder la panne du fer recouverte d'étain en permanence, que le fer soit allumé ou éteint. L'étain protège la panne de l'oxydation : une panne nue à chaud s'oxyde en quelques secondes et tout devient difficile.
 
-Panne correctement protégé:
-
+Panne correctement protégée :
 ![wet good](./img/soudure/wet-good.jpeg)
 
-Panne non protégé (ne doit jamais arriver même rapidement):
+Panne non protégée (ne doit jamais arriver, même rapidement) :
 
 ![wet bad](./img/soudure/wet-bad.jpeg)
 
--> Exemple fer oxydé
+:::warning
+**Fin d'atelier** : avant d'éteindre le fer, on nettoie et redépose une couche d'étain sur la panne.
+:::
+### 2. Méthode
 
-### 2. Exemples de soudures
+1. Poser le fer sur le **pad + la patte** (les deux ensemble).
+2. Compter au moins 2s laisser la chaleur se propager.
+3. Amener l'étain du côté opposé : il doit fondre et « couler » autour de la patte.
 
-#### Defauts
+:::note
+**Pourquoi le premier joint est toujours plus compliqué ?** Parce que le pad et la piste sont froids et « pompent » la chaleur : la panne refroidit au contact. Une fois le premier joint fait, la plaquette et l'environnement sont chauds → les suivants vont plus vite. Les zones reliées à un plan de masse sont encore plus dures à chauffer.
+:::
 
-![Defects 1](./img/soudure/defects-1.jpeg)
+### 3. Exemples de soudures
 
-![Defects 2](./img/soudure/defects-2.jpeg)
+#### Défauts
+
+![Défauts 1](./img/soudure/defects-1.jpeg)
+![Défauts 2](./img/soudure/defects-2.jpeg)
+
+Les défauts à savoir reconnaître et nommer :
+| Défaut | Cause | Correctif |
+|---|---|---|
+| **Joint froid** (mat, granuleux) | pas assez chaud, ou on a bougé pendant la solidification | rechauffer proprement |
+| **Manque d'étain** | étain insuffisant | reprise + étain |
+| **Pont** entre deux broches | trop d'étain / mauvais geste | pompe / tresse à dessouder |
+| **Joint dérangé** (surface craquelée) | composant bougé avant refroidissement | tenir immobile ~1 s |
+| **Pad décollé** | trop chaud / trop longtemps | température, durée |
 
 #### Guide rapide
 
 ![Guide](./img/soudure/guide-1.jpeg)
 
-### 3. Température : étain sans plomb
+### 4. Température : étain sans plomb
 
-L'étain sans plomb demande 320–350 °C pour du THT :
-
+L'étain sans plomb demande **320–350 °C** pour du THT :
 - en dessous de ~300 °C → joints froids (l'étain ne mouille pas)
-- au-dessus → risque de décoller le pad
+- au-dessus → risque de décoller le pad de la plaquette
 
 :::warning
-
-Si l'étain ne fond pas à 350 °C ou plus, le fer est oxydé, ne pas augmenter la température
-
+Si l'étain ne fond pas à 350 °C ou plus, **le fer est oxydé** — ne pas augmenter la température, nettoyer la panne (laine de cuivre) et la re-étamer.
 :::
 
+### 5. Quand utiliser du flux
+Le fil à souder est déjà à cœur flux : il couvre la majorité des cas. Le flux supplémentaire sert quand :
+- le pad ou la patte est **oxydé / vieux** ;
+- on fait une retouche d'un joint existant.
+
 ## Atelier
-
 ### 1. Positionnement des composants
+On commence par les composants **les moins hauts** (résistances d'abord, puis LEDs, puis headers/connecteurs) pour que la plaquette reste stable et retournable.
+- Plier légèrement les pattes de l'autre côté pour maintenir le composant en place.
+- Vérifier la **polarité** des composants qui en ont une (LED : patte longue = + / anode ; méplat sur le corps).
+- Souder **une patte de chaque composant** d'abord, vérifier l'alignement, puis souder les autres.
+### 2. Exercices progressifs
+1. **Résistances seules** (le geste de base).
+2. **LEDs + résistance** (polarité + qualité des joints).
+3. **Headers 2.54 mm puis connecteur JST** (les pièces réellement utiles en robotique).
 
--> On commence par les moins hauts
+### 3. Validation
+- Inspection de chaque joint à la loupe : cône bien formé, pas de pont ni de joint froid.
+- Test au **multimètre** (continuité) ou en **allumant la LED** avec sa résistance.
+
+### 4. Nettoyage
+- Redéposer de l'étain sur **chaque panne** avant d'éteindre le fer.
