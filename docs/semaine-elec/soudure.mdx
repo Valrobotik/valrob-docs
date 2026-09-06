@@ -101,20 +101,89 @@ Le fil à souder est déjà à cœur flux : il couvre la majorité des cas. Le f
 - le pad ou la patte est **oxydé / vieux** ;
 - on fait une retouche d'un joint existant.
 
-## Atelier
-### 1. Positionnement des composants
+### 6. Positionnement des composants
 On commence par les composants **les moins hauts** (résistances d'abord, puis LEDs, puis headers/connecteurs) pour que la plaquette reste stable et retournable.
 - Plier légèrement les pattes de l'autre côté pour maintenir le composant en place.
 - Vérifier la **polarité** des composants qui en ont une (LED : patte longue = + / anode ; méplat sur le corps).
 - Souder **une patte de chaque composant** d'abord, vérifier l'alignement, puis souder les autres.
-### 2. Exercices progressifs
-1. **Résistances seules** (le geste de base).
-2. **LEDs + résistance** (polarité + qualité des joints).
-3. **Headers 2.54 mm puis connecteur JST** (les pièces réellement utiles en robotique).
 
-### 3. Validation
-- Inspection de chaque joint à la loupe : cône bien formé, pas de pont ni de joint froid.
-- Test au **multimètre** (continuité) ou en **allumant la LED** avec sa résistance.
+## Atelier
+
+### Modèle complet
+
+![Modèle 1](./img/soudure/model-1.jpeg)
+
+### 1. Partie A
+
+#### Liste des composants
+
+- 1 bouton omron
+- 1 diode TVS unidirectionnelle
+- 1 résistance 200Ω
+- 1 résistance 150Ω
+- 1 mosfet 2N7000
+- 1 LED THT Rouge
+- 1 LED THT Bleu
+- 1 connecteurs JST B3B-XH
+
+#### Composants à souder
+
+![Part A](./img/soudure/part-A.jpeg)
+
+:::warning
+Les LEDs (D2 & D3), ainsi que Q1 sont des composants polarisés.
+:::
+
+### 2. Partie B
+
+#### Liste des composants
+
+- 2 Connecteurs JST B2B-XH
+- 2 connecteurs à vis 5.08mm
+- 2 test points 3.5mm
+
+#### Composants à souder
+
+![Part B](./img/soudure/part-B.jpeg)
+
+:::tip
+Les connecteurs sont dans le bon sens quand ils rentrent entièrement dans le contour blanc.
+:::
+
+### 3. Partie C
+
+#### Liste des composants
+
+- 1 bouton omron
+- 1 Connecteur1 JST B6B-XH
+- 1 résistance 200Ω
+- 1 résistance 150Ω
+- 1 LED THT Rouge
+- 1 LED THT Bleu
+- 1 potentiomètre
+
+#### Composants à souder
+
+![Part C](./img/soudure/part-C.jpeg)
+
+### 3. Partie Bonus D/E
+
+#### Liste des composants
+
+- 1 bouton omron
+- 1 bouton SMD
+- 4 résistance SMD 4k7Ω 1206
+- 1 led smd 1206 bleu
+- 1 led smd 1206 rouge
+- 1 led smd 0805 verte
+- 1 led smd 0603 blanche
+
+#### Composants à souder
+
+![Part D/E](./img/soudure/part-DE.jpeg)
 
 ### 4. Nettoyage
-- Redéposer de l'étain sur **chaque panne** avant d'éteindre le fer.
+
+:::warning
+Redéposer de l'étain sur la avant d'éteindre le fer.
+:::
