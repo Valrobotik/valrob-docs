@@ -62,6 +62,8 @@ Une breadboard est un outil de **prototypage**, pas un produit fini. fonctionnem
 - des **rangées de 5 trous connectées entre elles** (dans la longueur) ;
 - des **rails d'alimentation** + et – sur les bords (parfois coupés en deux) ;
 
+![Breadboard 1](./img/schema/breadboard-1.jpeg)
+
 **Ses limites, à connaître avant d'en faire trop :**
 
 | Limite | Pourquoi |
@@ -71,53 +73,91 @@ Une breadboard est un outil de **prototypage**, pas un produit fini. fonctionnem
 | **Complexité limitée** | trop de fils = illisible et impossible à déboguer |
 | **Pas un robot** | vibrations → contacts qui sautent. Pour un robot on préfère une carte soudée |
 
-### 4. Ce qui fait « griller » les circuits (avec démos)
+### 4. Exemple correspondence Schéma/Breadboard
+
+![Comparaison 1](./img/schema/comp-1.png)
+
+### 5. Ce qui fait « griller » les circuits (avec démos)
 
 Quatre causes principales, **toutes démontrables** :
 
-#### a. La surintensité
-Trop de courant dans un composant → il chauffe puis grille. La démo classique et pas chère : une **LED branchée sans résistance** → elle s'allume très fort… puis claque (elle émet un petit « pop » et devient noire).
-
-**Règle : toujours une résistance en série avec une LED.**
-
-#### b. La polarité inversée
+#### a. La polarité inversée
 Certains composants sont **polarisés** : ils ne laissent passer le courant que dans un sens.
 
 - Une **LED à l'envers** : elle ne s'allume pas (et peut claquer si on force).
 - Un **condensateur électrolytique à l'envers** : plus grave — il peut **fuir, gonfler, voire exploser** (démo à faire avec précaution, ou simplement expliquée : c'est pour ça qu'on marque la polarité).
 - Une **résistance**, elle, n'a pas de polarité : peu importe le sens. → *Voilà pourquoi la polarité n'affecte pas tous les composants : tout dépend de la symétrie interne.*
 
-#### c. Surtension / sous-tension
+#### b. Surtension / sous-tension
 - **Sous-tension** : le circuit ne fonctionne pas bien ou pas du tout, mais ne casse généralement pas.
 - **Surtension** : **c'est la plus grave** — un composant alimenté au-dessus de sa tension max grille (ex. 12 V sur un module 5 V).
 
-#### d. Le court-circuit
+#### c. Le court-circuit
 Relier + et – directement (ou un GND manquant → le courant ne « sait pas revenir ») → courant énorme, chauffe, batterie qui se décharge vite, risque d'incendie sur une batterie puissante. **Toujours vérifier avant d'alimenter.**
 
 ## Atelier
 
-### 1. Exercice 1 : LED + résistance (breadboard d'abord, puis KiCad)
+### 1. Partie A: LED en série avec résistance
+
+#### Liste des composants
+- Alimentation
+- Breadboard
+- fils dupont males-males
+- 1 led tht
+- 1 résistance 200Ω
 
 1. Sur la **breadboard** : monter alim +5V + résistance (220–330 Ω) + LED en série. La LED s'allume ? Vérifier qu'elle ne s'allume pas à l'envers.
 2. Dans **KiCad** : reproduire le même circuit en schéma (symboles, fils, net labels GND/5V si besoin).
 
 :::info
-
 La valeur de la resistance en série avec la LED peut se calculer avec la loi les mailles et d'ohm, en pratique il est plus rapide d'utiliser un calculateur en ligne: [example](https://ledcalculator.net/)
-
 :::
 
-### 2. Exercice 2 : ajouter un bouton (KiCad d'abord, puis breadboard)
+<details>
+  <summary>Correction Breadboard (une fois montage terminé)</summary>
+
+  ![A correction 1](./img/schema/A-cor-1.png)
+
+</details>
+<details>
+  <summary>Correction schéma KiCad (une fois schéma terminé)</summary>
+ 
+  ![A correction 1](./img/schema/A-cor-2.jpeg)
+
+</details>
+
+### 2. Partie B: Ajout d'un bouton en série
 
 1. Dans **KiCad** : ajouter un bouton en série avec la LED.
 2. Sur la **breadboard** : câbler ce nouveau circuit.
 
-### 3. Exercice 3 : rétro-ingénierie
+<details>
+  <summary>Correction schéma KiCad (une fois schéma terminé)</summary>
+ 
+  ![B correction 2](./img/schema/B-cor-2.jpeg)
 
-1. Prendre un **montage breadboard déjà câblé** par Valrobotik
+</details>
+
+<details>
+  <summary>Correction Breadboard (une fois montage terminé)</summary>
+
+  ![B correction 1](./img/schema/B-cor-1.jpeg)
+
+</details>
+
+### 3. Partie C: Retro-ingénierie
+
+1. Prendre une carte soudure déjà soudé par vous dans un atelier précédent ou par Valrobotik
 2. En tirer le **schéma électrique** proprement (avec les bons symboles et net labels).
+
+<details>
+  <summary>Correction schéma KiCad (une fois schéma terminé)</summary>
+ 
+  ![C correction 1](./img/schema/C-cor-1.jpeg)
+
+</details>
 
 ### 4. Nettoyage
 
+- Éteindre les alims.
 - Retirer les fils et composants des breadboards (les ranger triés par type).
-- Éteindre/rendre les alims.
