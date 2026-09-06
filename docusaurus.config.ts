@@ -84,8 +84,8 @@ const config: Config = {
           title: 'Pages',
           items: [
             {
-              label: 'Ateliers',
-              to: '/docs/introduction',
+              label: 'Supports ateliers',
+              to: '/',
             },
           ],
         },
