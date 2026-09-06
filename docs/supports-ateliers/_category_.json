@@ -1,0 +1,9 @@
+{
+  "label": "Support ateliers",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/",
+    "description": "Bienvenue sur le site contenant la documentation des ateliers d'introductions à la robotique organisés par Valrobotik"
+  }
+}
