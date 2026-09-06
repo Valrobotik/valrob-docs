@@ -41,6 +41,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          routeBasePath: '/',
         },
         blog: false,
         theme: {
@@ -59,7 +60,7 @@ const config: Config = {
     navbar: {
       title: 'Valrobotik Docs',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'logo Valrobotik',
         src: 'img/logo.svg',
       },
       items: [
@@ -67,12 +68,11 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Ateliers',
+          label: 'Supports Ateliers',
         },
-        // { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://discord.gg/m4YxfVEyNQ',
+          label: 'Discord',
           position: 'right',
         },
       ],
@@ -81,7 +81,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Ateliers',
+          title: 'Pages',
           items: [
             {
               label: 'Ateliers',
@@ -90,37 +90,24 @@ const config: Config = {
           ],
         },
         {
-          title: 'Community',
+          title: 'Réseaux',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Instagram',
+              href: 'https://www.instagram.com/valrobotik',
             },
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discord.gg/m4YxfVEyNQ',
             },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            // {
-            //   label: 'Blog',
-            //   to: '/blog',
-            // },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/Valrobotik',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Valrobotik Docs, Inc. Built with Docusaurus.`,
+      copyright: `Valrobotik ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,
