@@ -46,6 +46,10 @@ Document (.FCStd): le fichier sauvegardé
 └── Feuille de calcul: les paramètres (côtes pilotes)
 ```
 
+##### Example de hiérarchie
+
+![Example Assemblage 1](./img/assemblage/example-1.jpeg)
+
 | Objet | Rôle | Contient | On le déplace ? |
 |---|---|---|---|
 | **Document** | le fichier sauvegardé | tout le projet | - |
@@ -70,6 +74,8 @@ Tout l'atelier se passe dans **un seul atelier** : `Assembly`. C'est lui qui gè
 | Modifier la source | la copie ne change pas | tout suit |
 | Poids du fichier | gros (autant de fois que de copies) | léger |
 | Usage typique | adapter une pièce une fois pour soi | **instancier** la même pièce 20 fois (les vis !) |
+
+![Lien 1](./img/assemblage/link-1.jpeg)
 
 - **Copie** (`Ctrl+C` / `Ctrl+V`) : deux objets indépendants. Utile pour une variante définitive, à éviter dans un assemblage.
 - **Lien** (Std_LinkMake, ou *Insérer un lien* dans un assemblage) : plusieurs instances d'un même objet, chacune avec son **propre placement**. 8 vis identiques = 1 vis + 8 liens.
@@ -109,6 +115,8 @@ Un STEP importé ne se remodélise pas facilement: on peut déplacer, le percer 
 
 Un assemblage se fait toujours en deux temps:
 
+![Déplacement 1](./img/assemblage/move-1.jpeg)
+
 1. **Placement**: *où est la pièce* (position en mm, rotation en degrés), on la met à peu près en place.
 2. **Joints**: *à quoi la pièce est attachée*, pour que ça **suive** si l'autre pièce bouge.
 
@@ -129,6 +137,7 @@ Les joints de base :
 | **Distance** | impose une distance (ou un jeu) | jeu axial d'une roue |
 | **Parallèle / Perpendiculaire / Angle** | oriente | une équerre à 90° |
 
+![Assemblage 1](./img/assemblage/ass-1.jpeg)
 Points de vigilance :
 
 - Une pièce est **ancrée** (*grounded*) ou **Fixe**: c'est la référence de l'assemblage.
@@ -161,6 +170,8 @@ Ordre de travail : **pièce → sous-assemblage → assemblage → machine**. On
 ### 7. L'atelier Fasteners
 
 Cet atelier génère les vis, écrous et rondelles normalisés : on ne modélise pas une vis soi-même, on la **choisit**.
+
+![Fasteners 1](./img/assemblage/fasteners-1.jpeg)
 
 Fonctions de base :
 
