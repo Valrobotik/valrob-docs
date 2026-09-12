@@ -75,6 +75,8 @@ Une pièce imprimée n'est **pas** un bloc homogène, c'est un empilement de cor
 
 **a. L'anisotropie**
 
+![Anisotropie](./img/impression/anisotropy-1.jpeg)
+
 | Direction de l'effort | Comportement | Pourquoi |
 |---|---|---|
 | **Dans le plan des couches (XY)** | **résistant** | c'est le plastique lui-même qui travaille, cordon par cordon |
@@ -87,6 +89,8 @@ La liaison entre deux couches est **bien plus faible** que la résistance du pla
 **b. Ce sont les murs qui portent la charge**
 
 La solidité vient des **murs (périmètres)**, pas du remplissage.
+
+![Murs](./img/impression/walls-1.jpeg)
 
 | Paramètre | Rôle réel | Effet sur la solidité |
 |---|---|---|
@@ -102,7 +106,7 @@ En pratique : monter de **2 à 4 murs** apporte beaucoup plus de solidité que d
 
 #### a. L'orientation
 
-Choisir l'orientation, c'est choisir en même temps : **où la pièce est solide**, **quelle face touche le plateau** et **combien de supports** il faudra. Les trois se contredisent souvent : il faut arbitrer.
+Il faut choisir en même temps **où la pièce est solide**, **quelle face touche le plateau** et **combien de supports** il faudra. Les trois se contredisent souvent : il faut arbitrer.
 
 | Orientation | Avantages | Inconvénients |
 |---|---|---|
@@ -118,6 +122,8 @@ Choisir l'orientation, c'est choisir en même temps : **où la pièce est solide
 #### c. Les surplombs (overhangs)
 
 Un surplomb s'imprime tant que la couche suivante repose suffisamment sur la précédente.
+
+![Overhangs](./img/impression/overhangs-1.jpeg)
 
 | Angle par rapport à la verticale | Résultat |
 |---|---|
@@ -147,6 +153,14 @@ Les supports **marquent la surface**, sont **difficiles à enlever** dans les ca
 3. **diviser** la pièce en deux et l'assembler ;
 4. seulement ensuite : supports.
 
+##### Supports Linéaires
+
+![Support linéaire](./img/impression/linear-1.jpeg)
+
+##### Supports Organiques
+
+![Support organique](./img/impression/organic-1.jpeg)
+
 | Type de support | Usage |
 |---|---|
 | Grille / linéaire | cas général, facile à enlever sur surface plate |
@@ -169,6 +183,10 @@ Les supports **marquent la surface**, sont **difficiles à enlever** dans les ca
 
 :::note
 La grande majorité des défauts se **lisent sur la première couche**.
+:::
+
+:::tip
+Pour plus d'informations, voir le guide de [simplify3D](https://www.simplify3d.com/resources/print-quality-troubleshooting/)
 :::
 
 ### 5. Préparer l'imprimante
@@ -251,6 +269,7 @@ Ne jamais tirer sur le filament à froid : on abîme l'extrudeur. On chauffe d'a
 - 1 imprimante 3D préparée
 - 1 bobine de PLA
 - 1 pied à coulisse
+- [Modèle 3D pour l'impression](./files/impression/piece-1.step)
 
 #### Étapes
 
