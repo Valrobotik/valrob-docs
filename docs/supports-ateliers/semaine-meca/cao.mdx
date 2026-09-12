@@ -47,9 +47,22 @@ Documentation officielle, à garder en favori :
 
 L'esquisse est un dessin **2D** qui sert de base à toutes les fonctions. Elle n'est jamais libre, elle est soit posée sur un plan d'origine, soit sur une face du solide.
 
+![Esquisse](./img/cao/sketch-1.jpeg)
+
 #### a. Les contraintes
 
 Une esquisse n'a de sens que si elle est contrainte, chaque élément doit être **fixé**.
+
+Certaines contraintes peuvent s'appliquer automatiquement:
+
+- Coincidence
+- Point sur objet
+- Horizontale
+- Verticale
+- Parallèle
+- Perpendiculaire
+- Tangent/colinéaire
+- Symétrie (point milieu de la ligne)
 
 | Type | Exemples | Effet |
 |---|---|---|
@@ -62,9 +75,14 @@ On suit l'état de l'esquisse à la **couleur** des lignes : tant qu'il reste du
 Deux contraintes « qui disent la même chose » (par exemple horizontal **et** deux points à la même hauteur) se contredisent : le solveur refuse l'esquisse. Il faut alors **supprimer la contrainte en trop**, pas en ajouter une autre.
 :::
 
+:::tip
+Voir la documentation de freecad pour une liste de toutes les contraintes possibles: [sketcher](https://wiki.freecad.org/Sketcher_Workbench/fr#Outils)
+:::
+
 #### b. Les lignes de construction
 
 Ce sont des lignes de **référence** qui ne participent pas au profil : axes de symétrie, cercles primitifs de perçage, lignes de repère. On les trace avec l'outil prévu (elles apparaissent dans une couleur distincte) et elles servent uniquement de support aux contraintes.
+![Lignes constructions](./img/cao/construction-1.jpeg)
 
 #### c. Les projections
 
@@ -80,6 +98,12 @@ Les causes habituelles :
 - une ligne qui dépasse au-delà de l'intersection ;
 - un profil en « T » quelque part.
 
+![Contour non fermé 1](./img/cao/close-1.jpeg)
+
+du à:
+
+![Contour non fermé 2](./img/cao/close-2.jpeg)
+
 | Symptôme | Ce qu'on fait |
 |---|---|
 | Le profil semble fermé mais la protrusion échoue | zoomer sur les jonctions, vérifier les points non coïncidents |
@@ -94,12 +118,16 @@ Les causes habituelles :
 | **Cavité** | Pocket | retire de la matière selon une esquisse | gérer la profondeur "à travers tout" plutôt que deviner |
 | **Symétrie** | Mirror | duplique une fonction par rapport à un plan | bien choisir le plan d'origine |
 | **Congé** | Fillet | arrondit les arêtes | **à placer en fin d'arbre** |
-| **Binder** | SubShapeBinder | copie une **référence** de forme depuis un autre corps | crée une dépendance (voir §5) |
+| **Binder** | SubShapeBinder | copie une **référence** de forme depuis un autre corps | crée une dépendance |
 | *Révolution* | Revolution | extrusion circulaire (utile pour les pièces tournées) | l'esquisse doit rester d'un seul côté de l'axe |
 | *Répétition linéaire* | LinearPattern | répète une fonction en grille | pratique pour une plaque à trous |
 
 :::note
 Les congés et les arrondis sont problématiques, ils se calculent sur les arêtes existantes. Posés trop tôt, ils cassent dès qu'on modifie une esquisse en amont. On les met à la fin.
+:::
+
+:::tip
+Voir la documentation de freecad pour une liste de toutes les fonctions possibles: [PartDesign](https://wiki.freecad.org/PartDesign_Workbench/fr)
 :::
 
 ### 4. L'ordre dans l'arbre
@@ -115,6 +143,8 @@ Piège classique : une fonction qui référence « la **face 7** » ou « l'arê
 ### 5. Le binder pour créer la pièce complémentaire
 
 Pour fabriquer une pièce qui s'emboîte dans une autre (un couvercle, un boîtier complémentaire, une platine), on **ne remesure pas tout à la main** :
+
+![Binder](./img/cao/binder-1.jpeg)
 
 1. Nouveau **Body** pour la nouvelle pièce.
 2. **Binder** (SubShapeBinder) vers la pièce d'origine : on récupère son contour réel.
