@@ -1,0 +1,8 @@
+{
+  "label": "Semaine Méca",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Introduction à la mécanique utilisé à Valrobotik"
+  }
+}
