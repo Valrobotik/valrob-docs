@@ -1,0 +1,322 @@
+---
+sidebar_position: 3
+---
+
+# Assemblages avec FreeCAD
+
+Atelier d'introduction aux assemblages et sous-assemblages avec FreeCAD
+
+## Objectifs de l'atelier
+
+- Comprendre la hiérarchie entre **documents, conteneurs, assemblages et corps**
+- Comprendre la différence entre **lien** et **copie**
+- Savoir **importer** des fichiers STEP
+- Savoir créer des **assemblages** et des **sous-assemblages**
+- Savoir utiliser les fonctions de base de l'atelier **Fasteners**
+- Savoir **importer et utiliser des pièces paramétriques**
+- Être familier avec les **tailles de vis standards**
+
+## Matériel requis
+
+- PCs avec FreeCAD (+atelier **Fasteners**)
+- Fichiers fournis : pièces, sous-assemblages et assemblage (`.FCStd` et `.STEP`)
+- Jeu de vis réelles (M3 / M4) pour comparer avec l'écran
+- Pied à coulisse
+
+## Informations
+
+### 0. Sauvegarder souvent
+
+:::warning
+Sauvegardez **avant** chaque manipulation et après chaque étape qui marche (`Ctrl+S`).
+:::
+
+### 1. La hiérarchie : document, conteneur, assemblage, corps
+
+```text
+Document (.FCStd): le fichier sauvegardé
+│
+├── Assembly: l'assemblage (contient et positionne les parties)
+│   │
+│   ├── Part / conteneur: un groupe qu'on déplace d'un bloc
+│   │   └── Body: UNE pièce solide + son arbre (esquisse, protrusion…)
+│   │
+│   └── Link → moteur.step: une instance, la géométrie reste ailleurs
+│
+└── Feuille de calcul: les paramètres (côtes pilotes)
+```
+
+| Objet | Rôle | Contient | On le déplace ? |
+|---|---|---|---|
+| **Document** | le fichier sauvegardé | tout le projet | - |
+| **Conteneur** (Part) | regroupe des objets | des pièces, des liens | oui, d'un bloc |
+| **Assemblage** (Assembly) | contient **et** attache les parties entre elles | parties, liens, joints | oui, comme un ensemble |
+| **Corps** (Body) | **une seule** pièce solide | un arbre de fonctions | oui, mais c'est la pièce |
+| **Lien** (Link) | une instance d'un objet existant | rien, il pointe | oui, indépendamment |
+
+Plus simplement:
+
+- un **Body** = une pièce qu'on imprime ou qu'on usine ;
+- un **Assemblage** = plusieurs pièces liées entre elles ;
+- un **Conteneur** = un regroupement qu'on veut manipuler d'un seul geste.
+
+Tout l'atelier se passe dans **un seul atelier** : `Assembly`. C'est lui qui gère les liens, les placements et les joints.
+
+### 2. Lien ou copie ? (et organisation des fichiers)
+
+| | **Copie** | **Lien** |
+|---|---|---|
+| Où est la géométrie | dupliquée dans le document | une seule fois, dans l'original |
+| Modifier la source | la copie ne change pas | tout suit |
+| Poids du fichier | gros (autant de fois que de copies) | léger |
+| Usage typique | adapter une pièce une fois pour soi | **instancier** la même pièce 20 fois (les vis !) |
+
+- **Copie** (`Ctrl+C` / `Ctrl+V`) : deux objets indépendants. Utile pour une variante définitive, à éviter dans un assemblage.
+- **Lien** (Std_LinkMake, ou *Insérer un lien* dans un assemblage) : plusieurs instances d'un même objet, chacune avec son **propre placement**. 8 vis identiques = 1 vis + 8 liens.
+- **Lien vers un autre document** : l'assemblage dépend d'un fichier externe. Si on déplace ou renomme le fichier source, le lien casse.
+- Pour modifier la source d'un lien : clic droit → ouvrir le **document lié**, on modifie, on sauvegarde, l'assemblage se recharge.
+
+Le projet est donc réparti sur **plusieurs fichiers** :
+
+```text
+projet/
+├── pieces/
+│   ├── support-moteur.FCStd
+│   ├── moteur.step
+│   ├── roue.step
+│   └── extrusion-alu.FCStd      (paramétrique : longueur)
+├── sous-assemblages/
+│   └── moteur-roue.FCStd
+└── assemblage/
+    └── assemblage-principal.FCStd
+```
+
+:::warning
+Tous les fichiers d'un projet restent **dans le même dossier**, avec des noms stables. Un fichier déplacé, renommé ou supprimé casse tous les liens qui pointent vers lui.
+:::
+
+### 3. Importer un STEP
+
+- *Fichier → Importer* : le STEP arrive comme un **solide figé**, sans esquisse, sans arbre et sans cote modifiable facilement.
+- Vérifier l'**échelle** et l'**orientation** dès l'import, avant de le positionner.
+- Si on a besoin de plusieurs exemplaires : importer **une fois**, puis faire des **liens**.
+
+:::note
+Un STEP importé ne se remodélise pas facilement: on peut déplacer, le percer ou l'utiliser comme référence.
+:::
+
+### 4. Placement, puis assemblage
+
+Un assemblage se fait toujours en deux temps:
+
+1. **Placement**: *où est la pièce* (position en mm, rotation en degrés), on la met à peu près en place.
+2. **Joints**: *à quoi la pièce est attachée*, pour que ça **suive** si l'autre pièce bouge.
+
+| Approche | Principe | Avantage | Limite |
+|---|---|---|---|
+| **Placement** seul | on tape les coordonnées, ou on déplace à la souris | rien à résoudre, toujours valide | rien ne suit si on bouge une pièce |
+| **Joints** | on choisit une liaison entre deux pièces | décrit la mécanique réelle | le solveur peut échouer (sur-contrainte) |
+| (**Repère local (LCS)**) | on attache le repère d'une pièce au repère d'une autre | très robuste, références stables | il faut poser les repères soi-même |
+
+Les joints de base :
+
+| Joint | Ce qu'il bloque | Exemple |
+|---|---|---|
+| **Fixe** | tout | plaquer deux faces l'une sur l'autre, aligner deux trous |
+| **Pivot** (rotation) | translations, laisse tourner autour d'un axe | une roue sur son axe |
+| **Glissière** | rotations, laisse coulisser sur un axe | un tiroir, un rail |
+| **Cylindrique** | laisse tourner **et** coulisser | un axe dans un alésage |
+| **Distance** | impose une distance (ou un jeu) | jeu axial d'une roue |
+| **Parallèle / Perpendiculaire / Angle** | oriente | une équerre à 90° |
+
+Points de vigilance :
+
+- Une pièce est **ancrée** (*grounded*) ou **Fixe**: c'est la référence de l'assemblage.
+- Le solveur refuse les **joints redondants** (deux joints qui disent la même chose). Comme en esquisse, on **supprime le joint en trop**, on n'en ajoute pas un troisième.
+
+### (5. Les repères locaux (LCS))
+
+Un **repère local** (datum coordinate system, ou LCS) est une origine avec ses axes, posée **dans la pièce** : au centre d'un trou, sur une face d'appui, au centre d'une rainure.
+
+Pourquoi s'en servir :
+
+- Sélectionner une **face** ou une **arête** d'un solide, c'est sélectionner un **numéro**. Si la pièce est modifiée en amont, ce numéro peut changer de cible et le joint part de travers. Un repère local, lui, reste **où on l'a mis**.
+- Un repère côté base + un repère côté pièce = un **Fixe** qui plaque et aligne en une seule opération (contact + perçage d'un coup).
+- Sur les **extrusions alu paramétriques**, un repère au centre de la rainure et à l'extrémité permet de monter **bout à bout** ou **à 90°** sans retaper aucune cote.
+
+:::tip
+Poser les repères, c'est du travail de **conception**, pas d'assemblage : on les prépare une fois dans la pièce, avec des noms clairs (`trou-A`, `bout-rainure`). Après, l'assemblage n'est plus qu'une suite d'attachements.
+:::
+
+### 6. Les sous-assemblages
+
+Un sous-assemblage est un assemblage qu'on place **dans** un autre. Moteur + roue + support moteur forment un bloc qu'on ne veut plus repositionner pièce par pièce.
+
+- On gère quelques joint au lieu de trente.
+- On peut **dupliquer** le sous-assemblage (deux moteurs = deux liens vers le même bloc).
+- On teste le mouvement **localement** (la roue tourne-t-elle librement ?) avant de l'installer dans la machine.
+
+Ordre de travail : **pièce → sous-assemblage → assemblage → machine**. On ne monte jamais dans l'autre sens.
+
+### 7. L'atelier Fasteners
+
+Cet atelier génère les vis, écrous et rondelles normalisés : on ne modélise pas une vis soi-même, on la **choisit**.
+
+Fonctions de base :
+
+1. Choisir la **norme** (ISO / DIN).
+2. Choisir le **type** : vis à tête cylindrique creuse (SHCS, ISO 4762), tête fraisée, tête plate, écrou, rondelle, tige filetée.
+3. Choisir la **taille** (M2 à M8) et la **longueur**.
+4. Cliquer la face ou l'arête où poser la vis : elle s'attache et suit la pièce.
+5. Utiliser **Inverser** si la vis sort du mauvais côté.
+
+| Vis | Pas standard | Trou de passage (serré / libre) | Ø tête SHCS | Hauteur tête | Écrou (surplats) |
+|---|---|---|---|---|---|
+| **M2** | 0,4 | 2,2 / 2,4 | 3,8 | 2 | 4 |
+| **M3** | 0,5 | 3,2 / 3,4 | 5,5 | 3 | 5,5 |
+| **M4** | 0,7 | 4,3 / 4,5 | 7 | 4 | 7 |
+| **M5** | 0,8 | 5,3 / 5,5 | 8,5 | 5 | 8 |
+| **M6** | 1,0 | 6,4 / 6,6 | 10 | 6 | 10 |
+
+Longueurs courantes : **6, 8, 10, 12, 16, 20, 25 mm**. Règle pratique : longueur = épaisseur serrée + **6 à 8 mm** de prise dans l'écrou ou l'insert.
+
+:::warning
+Sur une pièce imprimée, un avant-trou au diamètre nominal n'est pas vissable : le cordon se referme. Prévoir un **avant-trou pour insert thermique**, ou élargir au diamètre de passage.
+:::
+
+### 8. Les pièces paramétriques
+
+Une pièce paramétrique est un `.FCStd` dont les cotes sont pilotées par des **paramètres** : une feuille de calcul ou des propriétés nommées. On change **une** valeur (la longueur d'un profilé alu, par exemple) et toute la pièce se reconstruit.
+
+| | **Lien vers le fichier-source** | **Copie dans l'assemblage** |
+|---|---|---|
+| Pourquoi | instancier la bibliothèque telle quelle | adapter une longueur spéciale |
+| Mise à jour | suit si la source est modifiée | reste figée |
+| Taille du projet | légère | dupliquée |
+
+En pratique, on **lie** les profilés de bibliothèque, et on ne copie que le cas particulier.
+
+:::tip
+Documentation officielle, à garder en favori :
+
+- [Assembly workbench](https://wiki.freecad.org/Assembly_Workbench) — les joints de l'assemblage 1.0
+- [Fasteners workbench](https://wiki.freecad.org/Fasteners_Workbench) — vis, écrous, rondelles
+- [Std LinkMake](https://wiki.freecad.org/Std_LinkMake) — créer un lien
+- [Std Part](https://wiki.freecad.org/Std_Part) — le conteneur
+:::
+
+## Atelier
+
+Tous les fichiers nécessaires sont fournis : pièces séparées, sous-assemblage et assemblage principal. On ne modélise **aucune** pièce : on assemble, on contraint et on instancie.
+
+### 1. Partie A : Ouvrir le projet et comprendre la hiérarchie
+
+#### Liste des composants
+
+- 1 PC avec FreeCAD
+- Les fichiers fournis (pièces, sous-assemblage, assemblage)
+
+#### Étapes
+
+1. Ouvrir l'**assemblage fourni** et faire *Enregistrer sous* dans **votre** dossier (jamais travailler sur l'original).
+2. Repérer dans l'arbre : l'assemblage, les conteneurs, les **liens** et les corps. Repérer aussi les **degrés de liberté** affichés.
+3. Ouvrir un **lien** (clic droit → document lié) : constater que la géométrie est bien dans un **autre fichier**.
+4. Ouvrir la même pièce en `.STEP` et en `.FCStd` : laquelle est modifiable ?
+5. Créer une **copie** d'une pièce, puis un **lien** de la même pièce. Comparer l'arbre et la taille du fichier, puis déplacer l'original : la copie reste, le lien **suit**.
+6. Sur une copie du projet : renommer un fichier source, constater le lien cassé, puis remettre le bon nom.
+
+### 2. Partie B : Placement simple, puis assemblage par joints
+
+#### Liste des composants
+
+- 1 PC avec FreeCAD
+- 2 pièces s'assemblant par leurs **trous** (fournies)
+
+#### Étapes
+
+1. Importer les deux pièces et les positionner **à la main** (propriété *Placement* : position en mm, rotation en degrés).
+2. Constater la limite : on bouge une pièce, l'autre ne suit pas.
+3. **Ancrer** la pièce de base (elle devient la référence de l'assemblage).
+4. Créer un joint **Fixe** entre les deux faces d'appui : les pièces se plaquent.
+5. Ajouter l'alignement des **trous** avec un second joint (repères locaux ou axes de perçage).
+6. Lire le nombre de **degrés de liberté** restants. Bouger la pièce montée : elle doit rester alignée.
+7. Remplacer un des joints par un **Pivot** : la pièce doit désormais tourner autour de son axe, et **rien d'autre** ne doit bouger.
+8. Provoquer volontairement une **sur-contrainte** (un joint qui refait ce qu'un autre fait déjà), lire l'erreur du solveur, puis supprimer le joint en trop.
+
+### 3. Partie C : Sous-assemblage moteur / roue / support
+
+#### Liste des composants
+
+- 1 PC avec FreeCAD
+- 1 support moteur
+- 1 moteur
+- 1 roue
+
+#### Étapes
+
+1. Créer un **nouveau document** pour le sous-assemblage et le sauvegarder.
+2. **Lier** le support moteur et l'**ancrer** : c'est la référence du bloc.
+3. **Lier** le moteur et l'attacher au support : face d'appui + les quatre trous alignés.
+4. **Lier** la roue et l'attacher sur l'axe du moteur : **Pivot** + une **Distance** pour le jeu axial.
+5. Tester la **rotation** de la roue : elle tourne librement, et le reste ne bouge pas plus que prévu.
+6. Sauvegarder. Le sous-assemblage est désormais un bloc réutilisable.
+
+:::warning
+Après chaque joint, regardez les **degrés de liberté** restants et l'état du solveur. Un solveur qui échoue signale soit une sur-contrainte, soit une sélection de référence incohérente.
+:::
+
+### 4. Partie D : Vis avec l'atelier Fasteners
+
+#### Liste des composants
+
+- 1 PC avec FreeCAD
+- Le sous-assemblage de la Partie C
+- Jeu de vis M3 / M4 réelles
+
+#### Étapes
+
+1. Ouvrir l'atelier **Fasteners** ; choisir une vis **ISO 4762** (SHCS), **M3**, longueur adaptée à l'épaisseur serrée.
+2. Poser les quatre vis dans les trous du support moteur, corriger l'orientation avec **Inverser**.
+3. Ajouter les **écrous** et **rondelles** correspondants.
+4. Faire varier la longueur : trop longue, la vis traverse et bute ; trop courte, elle ne prend pas.
+5. Remplacer les quatre copies par **une** vis et quatre **liens**.
+6. Comparer les têtes et les longueurs affichées avec les vis réelles, au pied à coulisse.
+
+### 5. Partie E : Assemblage final (base + extrusions alu)
+
+#### Liste des composants
+
+- 1 PC avec FreeCAD
+- 1 base d'assemblage
+- 2 extrusions alu **paramétriques** (`.FCStd` avec paramètre de longueur)
+- Vis M3 / M4 (Fasteners)
+
+#### Étapes
+
+1. Ouvrir l'assemblage principal. **Lier** la base et l'**ancrer**.
+2. **Lier** une première extrusion alu depuis son fichier d'origine (lien, **pas** copie).
+3. Vérifier ou poser les **repères locaux** utiles : sur la base, et au centre de la rainure à l'extrémité de l'extrusion.
+4. Attacher l'extrusion à la base en alignant les repères ; vérifier le montage **bout à bout**.
+5. Répéter en **90°** (ou avec une équerre) pour le deuxième montant.
+6. Modifier la **longueur** dans la feuille de calcul du fichier source, sauvegarder, observer la mise à jour dans l'assemblage.
+7. Dupliquer l'extrusion par **lien** plutôt que de la réinsérer.
+8. Ajouter les **vis de fixation** à chaque jonction avec Fasteners.
+9. Contrôle final : aucune pièce ne « flotte », les degrés de liberté sont ceux attendus (0, ou volontairement mobiles), le solveur ne signale pas d'erreur.
+10. Sauvegarder et ranger **tous** les fichiers du projet dans le même dossier.
+
+### 6. Exercice libre
+
+- Reprendre l'assemblage et remplacer une **copie** par un **lien**.
+- Ajouter la deuxième paire moteur / roue en **liant** le sous-assemblage complet.
+- Préparer les **repères locaux** manquants sur une pièce de la bibliothèque.
+- Générer la **nomenclature** (BOM) de l'assemblage final.
+
+:::note
+L'objectif n'est pas de tout contraindre, mais de comprendre **ce qui tient la pièce** et ce qui doit rester libre.
+:::
+
+### 7. Nettoyage
+
+- Sauvegarder **tous** les `.FCStd` (fichiers liés compris) dans le même dossier.
+- Fermer FreeCAD proprement : un document lié encore ouvert peut bloquer la sauvegarde.
+- Ranger les vis, les pièces de démonstration et les pieds à coulisse, puis éteindre les PCs.
