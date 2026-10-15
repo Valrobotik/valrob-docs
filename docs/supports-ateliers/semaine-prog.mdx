@@ -1,0 +1,171 @@
+# Semaine programmation
+
+## Ressources
+
+- [Lien modèle git](https://github.com/Galacs/valrob-exemple-2610)
+- [Schéma électrique de la carte code](/files/valrob-wb-code-1.pdf)
+
+## Cheatsheet
+
+### Utilisation de librairies
+
+Pour utiliser des librairies, il faut utiliser la directive `#include` au début du code:
+
+```cpp
+#include <Arduino.h>    // types Arduino de base (souvent ajouté automatiquement)
+#include <FastLED.h>    // → donne accès à CRGB, FastLED, CRGB::Red…
+#include <Button2.h>    // → donne accès à Button2, b.setClickHandler()…
+```
+
+### Structure programme Arduino
+
+Le programme est composé de deux fonctions, `setup()` et `loop()`.
+
+Tout ce qui est dans la fonction `setup()` s'éxecute qu'une seule fois au démarrage du programme,
+ cette fonction est souvent utilisé pour configurer les différents pins et périphériques.
+
+La fonction `loop()` s'éxecute en boucle jusqu'à la fin du monde, elle est utilisé pour notre logique principale, cette fonction doit s'éxecuter rapidement.
+
+### Lecture/Écriture numérique
+
+```cpp
+// Configure un pin en sortie (peut piloter une LED, un transistor, un moteur…).
+// Sans pinMode(), digitalWrite() ne fait rien d'utile sur un GPIO non configuré
+pinMode(21, OUTPUT);
+
+// Configure un pin en entrée.
+pinMode(0, INPUT);
+
+// Sortie : HIGH = 3,3 V, LOW = 0 V. Utile pour nSLEEP / IN1 / IN2 du driver moteur
+digitalWrite(33, HIGH);
+digitalWrite(34, LOW);
+
+// Entrée : lit l'état du pin, renvoie 1 ou 0
+if (!digitalRead(0)) {          // équivaut à digitalRead(0) == 0
+  Serial.println("prout");
+}
+```
+
+### Utilisation du bouton
+
+```cpp
+// Il faut initialiser le bouton avant le setup() ou le loop()
+Button2 btn;
+
+// Cette fonction permet de préciser à la librairie sur quel pin le bouton est installé
+// 5 correspond au numéro de gpio sur lequel le bouton est relié,
+// il faut appeler cette fonction dans setup()
+// pinMode(5, INPUT_PULLUP);  // inutile ici : Button2 gère lui-même le pin
+btn.begin(5);
+
+// On peut mettre une action 
+btn.setClickHandler([](Button2& b){
+  state = ETAT_ROUGE;
+  debut_clignote = millis();
+});
+
+// Cette fonction doit obligatoirement être appelé dans loop()
+btn.loop();
+````
+
+#### Extrait de la documentation
+
+- You can define callback functions to track various types of clicks:
+  - `setTapHandler()` will be be called when any click occurs. This is the most basic handler. It ignores all timings built-in the library for double or triple click detection.
+  - `setClickHandler()` will be triggered after a single click occurred.
+  - `setChangedHandler()`, `setPressedHandler()` and `setReleasedHandler()` allow to detect basic interactions.
+  - `setLongClickDetectedHandler()` will be triggered as soon as the long click timeout has passed.
+  - `setLongClickHandler()` will be triggered after the button has released.
+  - `setDoubleClickHandler()` and `setTripleClickHandler()` detect complex interactions.
+
+[Documentation librairie Button2](https://github.com/LennartHennigs/Button2)
+
+### Temps
+
+```cpp
+// Nombre de millisecondes écoulées depuis le démarrage (unsigned long).
+// Ne bloque PAS le programme, contrairement à delay() : parfait pour des temporisations
+unsigned long debut = millis();
+
+// Comme le compteur peut "déborder" (~49 jours), on compare toujours par soustraction:
+if (millis() - debut_clignote > 5000) { state = ETAT_VERT; }
+```
+
+### Port série pour affichage sur le pc
+
+```cpp
+// Ouvre le port série à 115200 bauds. À appeler une fois dans setup()
+Serial.begin(115200);
+
+// Envoie un texte (avec retour à la ligne) vers le moniteur série
+Serial.println("prout");
+// Serial.print("valeur = "); Serial.println(i);  // sans retour à la ligne
+```
+
+
+### Exemple de FSM
+
+```cpp
+// Avant loop() et setup()
+enum etats_t {
+  ETAT_ROUGE,
+  ETAT_VERT,
+};
+
+etats_t state = ETAT_VERT;
+
+// Dans setup()
+btn.setClickHandler([](Button2& b){
+  state = ETAT_ROUGE;
+  debut_clignote = millis();
+});
+btn.setDoubleClickHandler([](Button2& b){
+  ledcAttach(39, 4000, 13);
+  ledcWriteNote(39, NOTE_D, 4);
+  debut_bip = millis();
+});
+
+
+// Dans loop()
+switch (state) {
+  case ETAT_ROUGE:
+    leds[0] = CRGB::Red;
+    FastLED.show();
+    break;
+  case ETAT_VERT:
+    leds[0] = CRGB::Green;
+    FastLED.show();
+    break;
+}
+
+if (state == ETAT_ROUGE && millis() - debut_clignote > 5000) {
+  state = ETAT_VERT;
+}
+```
+
+
+### LED RGB avec FastLED
+
+```cpp
+// Le tableau qui contient les couleurs des LED (déclaré globalement)
+#define NUM_LEDS 1
+CRGB leds[NUM_LEDS];
+
+// Déclare le ruban : <type de puce, pin de données, ordre des couleurs>
+// WS2812B = type de LED, LED_PIN = pin data, GRB = ordre des octets (souvent GRB sur WS2812B)
+// À appeler UNE SEULE FOIS, dans setup()
+FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
+
+// Règle la luminosité globale (0 = éteint, 255 = max). Non bloquant.
+// Déjà en mémoire avant le premier show()
+FastLED.setBrightness(100);
+
+// On écrit dans le tableau en mémoire… (rien n'est envoyé au ruban à ce moment)
+leds[0] = CRGB::Yellow3;
+
+// …et c'est show() qui envoie réellement les données sur le fil.
+// À appeler à chaque fois que tu modifies leds[] et que tu veux voir le résultat
+FastLED.show();
+```
+
+## Exemples d'exercices
