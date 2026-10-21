@@ -1,0 +1,9 @@
+{
+  "label": "Suiveurs de lignes",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/sdl",
+    "description": "Documentation pour les suiveurs de lignes Valrobotik"
+  }
+}
