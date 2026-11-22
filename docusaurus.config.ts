@@ -65,10 +65,14 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          to: '/sdl',
+          label: 'Suiveurs de lignes',
           position: 'left',
+        },
+        {
+          to: '/ateliers',
           label: 'Supports Ateliers',
+          position: 'left',
         },
         {
           href: 'https://discord.gg/m4YxfVEyNQ',
