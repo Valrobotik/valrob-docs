@@ -85,15 +85,6 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Pages',
-          items: [
-            {
-              label: 'Supports ateliers',
-              to: '/ateliers',
-            },
-          ],
-        },
-        {
           title: 'Réseaux',
           items: [
             {
