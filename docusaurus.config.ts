@@ -27,6 +27,36 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
 
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Valrobotik',
+        url: 'https://valrobotik.fr',
+        logo: 'https://docs.valrobotik.fr/img/logo.svg',
+        sameAs: [
+          'https://www.instagram.com/valrobotik',
+          'https://github.com/Valrobotik',
+          'https://discord.gg/m4YxfVEyNQ',
+        ],
+      }),
+    },
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Valrobotik Docs',
+        url: 'https://docs.valrobotik.fr',
+        inLanguage: 'fr',
+      }),
+    },
+  ],
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "" with "zh-Hans".
