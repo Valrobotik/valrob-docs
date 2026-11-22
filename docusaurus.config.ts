@@ -83,7 +83,40 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'Valrobotik',
+        src: 'img/logo.svg',
+        href: '/sdl',
+        width: 40,
+        height: 61,
+      },
       links: [
+        {
+          title: 'Documentation',
+          items: [
+            {
+              label: 'Suiveurs de lignes',
+              to: '/sdl',
+            },
+            {
+              label: 'Supports ateliers',
+              to: '/ateliers',
+            },
+          ],
+        },
+        {
+          title: 'Concours',
+          items: [
+            {
+              label: 'Règlement & inscriptions',
+              to: '/sdl/reglement',
+            },
+            {
+              label: 'Architecture électronique',
+              to: '/sdl/architecture',
+            },
+          ],
+        },
         {
           title: 'Réseaux',
           items: [
@@ -102,7 +135,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Valrobotik ${new Date().getFullYear()}`,
+      copyright: `© ${new Date().getFullYear()} Valrobotik`,
     },
     prism: {
       theme: prismThemes.github,
