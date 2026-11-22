@@ -85,7 +85,7 @@ const config: Config = {
           items: [
             {
               label: 'Supports ateliers',
-              to: '/',
+              to: '/ateliers',
             },
           ],
         },
