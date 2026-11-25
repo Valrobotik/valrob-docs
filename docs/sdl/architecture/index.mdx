@@ -24,6 +24,12 @@ La carte de contrôle, le driver et la carte capteurs se parlent par un bus CAN.
 
 Le bus se câble en chaîne. Chacune a deux connecteurs CAN, un qui vient de la carte précédente et un qui repart vers la suivante, et on branche les cartes l'une après l'autre.
 
+Chaque carte répond à une adresse de 0 à 7, choisie par les cavaliers ADDR0 à ADDR2. Deux cartes avec la même adresse se gênent sur le bus, donc chacune doit avoir la sienne.
+
+:::note
+Comme le kit ne contient qu'une carte de chaque type, la valeur choisie n'a pas beaucoup d'importance. Il suffit que le programme utilise la même adresse que celle réglée sur la carte. Si vous ajoutez une deuxième carte du même type, par exemple un second capteur de ligne ou un deuxième driver pour piloter plus de moteurs, donnez-leur des adresses différentes.
+:::
+
 En théorie, il faut fermer le cavalier de terminaison aux deux extrémités de la chaîne. Les cavaliers s'appellent JP1 sur la carte de contrôle et sur le driver, et JP4 sur la carte capteurs. Ils ajoutent une résistance de 120 Ω entre CANH et CANL pour absorber le signal au bout du câble et éviter qu'il reparte en écho. Les cartes du milieu laissent leur cavalier ouvert, sinon la résistance de l'ensemble devient trop faible et le bus ne fonctionne plus.
 
 ![Bus CAN en chaîne, terminé par une résistance de 120 Ω à chaque extrémité](./img/can-bus.svg)

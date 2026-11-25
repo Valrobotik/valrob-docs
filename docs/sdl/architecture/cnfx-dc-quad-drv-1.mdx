@@ -46,7 +46,7 @@ Le reste de la carte est déjà assemblé, seuls les connecteurs traversants son
 | J5 | Header 1×4, 2,54 mm | 1 : +3,3 V, 2 : U0RXD, 3 : GND, 4 : U0TXD | UART de debug |
 | JP1 | Cavalier 1×2, 2,54 mm | Ferme la résistance de 120 Ω | Terminaison CAN |
 
-Les cavaliers JP2, JP3 et JP4 sont des cavaliers à souder, ouverts par défaut. Ils relient les entrées ADDR0, ADDR1 et ADDR2 à la masse.
+Les cavaliers JP2, JP3 et JP4 sont des cavaliers à souder, ouverts par défaut. Ils choisissent l'adresse de la carte sur le bus CAN. Chaque cavalier fermé ajoute un bit, JP2 vaut 1, JP3 vaut 2 et JP4 vaut 4, ce qui donne une adresse entre 0 et 7. Le firmware lit ces trois entrées au démarrage. Donnez une adresse différente à chaque carte du bus, par exemple 1 pour le driver et 2 pour les capteurs.
 
 Un doute sur la soudure ? L'atelier [soudure](/supports-ateliers/semaine-elec/soudure) couvre les bases.
 
