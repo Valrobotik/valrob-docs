@@ -65,6 +65,20 @@ const config: Config = {
     locales: ['fr'],
   },
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {from: '/s/cnfx-pm-18650-5v-1', to: '/sdl/architecture/cnfx-pm-18650-5v-1'},
+          {from: '/s/cnfx-dc-quad-drv-1', to: '/sdl/architecture/cnfx-dc-quad-drv-1'},
+          {from: '/s/cnfx-cb-esp32s3-1', to: '/sdl/architecture/cnfx-cb-esp32s3-1'},
+          {from: '/s/cnfx-line-sensor-1', to: '/sdl/architecture/cnfx-line-sensor-1'},
+        ],
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',

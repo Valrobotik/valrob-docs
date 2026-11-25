@@ -1,0 +1,8 @@
+{
+  "label": "Architecture électronique",
+  "position": 2,
+  "link": {
+    "type": "doc",
+    "id": "sdl/architecture/index"
+  }
+}

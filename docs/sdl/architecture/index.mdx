@@ -1,0 +1,28 @@
+---
+slug: /sdl/architecture
+description: "Les quatre cartes du kit suiveur de ligne, alimentation 18650, driver de moteurs, contrôle ESP32-S3 et capteurs de ligne, avec schémas et fichiers KiCad."
+---
+
+# Architecture électronique
+
+Le kit électronique du concours est construit autour de quatre cartes. Elles communiquent par un bus CAN et partagent la même alimentation 5 V, ce qui permet de remplacer ou d'ajouter une carte sans tout recâbler.
+
+Chaque carte a sa page avec son schéma, la liste des connecteurs à souder et ses fichiers.
+
+## Les cartes du kit
+
+| Carte | Rôle |
+| --- | --- |
+| [CNFX 18650 5V 1](/sdl/architecture/cnfx-pm-18650-5v-1) | Charge et protège la batterie, fournit le 5 V aux autres cartes. |
+| [CNFX DC Quad Driver 1](/sdl/architecture/cnfx-dc-quad-drv-1) | Pilote quatre moteurs DC depuis le bus CAN. |
+| [CNFX CB ESP32S3 1](/sdl/architecture/cnfx-cb-esp32s3-1) | Fait tourner le programme du robot. |
+| [CNFX Line Sensor 1](/sdl/architecture/cnfx-line-sensor-1) | Lit la ligne avec dix capteurs infrarouges. |
+
+## Liste provisoire des composants inclus dans le kit
+
+- Batterie 18650
+- Carte d'alimentation
+- Carte contrôleur de moteurs
+- 2 moteurs DC
+- Capteur de ligne
+- Carte microcontrôleur basée sur ESP32-S3
