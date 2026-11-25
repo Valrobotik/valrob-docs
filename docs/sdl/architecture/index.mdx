@@ -18,6 +18,30 @@ Chaque carte a sa page avec son schéma, la liste des connecteurs à souder et s
 | [CNFX CB ESP32S3 1](/sdl/architecture/cnfx-cb-esp32s3-1) | Fait tourner le programme du robot. |
 | [CNFX Line Sensor 1](/sdl/architecture/cnfx-line-sensor-1) | Lit la ligne avec dix capteurs infrarouges. |
 
+## Le bus CAN
+
+La carte de contrôle, le driver et la carte capteurs se parlent par un bus CAN. Il tient sur deux fils, CANH et CANL, et ces trois cartes sont branchées dessus, ce qui permet à n'importe laquelle de discuter avec les autres sans câblage dédié.
+
+Le bus se câble en chaîne. Chacune a deux connecteurs CAN, un qui vient de la carte précédente et un qui repart vers la suivante, et on branche les cartes l'une après l'autre.
+
+En théorie, il faut fermer le cavalier de terminaison aux deux extrémités de la chaîne. Les cavaliers s'appellent JP1 sur la carte de contrôle et sur le driver, et JP4 sur la carte capteurs. Ils ajoutent une résistance de 120 Ω entre CANH et CANL pour absorber le signal au bout du câble et éviter qu'il reparte en écho. Les cartes du milieu laissent leur cavalier ouvert, sinon la résistance de l'ensemble devient trop faible et le bus ne fonctionne plus.
+
+![Bus CAN en chaîne, terminé par une résistance de 120 Ω à chaque extrémité](./img/can-bus.svg)
+
+En pratique, les câbles du robot sont courts, et deux cavaliers fermés n'importe où sur la chaîne suffisent, pas forcément ceux des deux cartes aux extrémités. Il ne faut simplement pas en fermer plus. Avec des câbles plus longs, il vaut mieux revenir à une terminaison aux deux extrémités.
+
+## L'alimentation
+
+Le bus CAN ne transporte que les données. La carte d'alimentation n'y est pas branchée, elle sert seulement à fournir le 5 V. Chaque carte le reçoit par son connecteur J1, avec un fil +5 V et un fil GND, depuis l'une des six sorties de la carte 18650.
+
+Le câblage d'alimentation part donc en étoile depuis la carte d'alimentation, alors que le bus CAN se chaîne de carte en carte.
+
+![Alimentation en étoile depuis la carte 18650 vers les trois autres cartes](./img/alimentation.svg)
+
+:::note
+Vous avez peut-être remarqué que les connecteurs d'alimentation ont trois broches. La troisième n'est pas utilisée pour l'instant. Elle est là pour transporter une autre tension que le 5 V si le kit en a besoin un jour.
+:::
+
 ## Liste provisoire des composants inclus dans le kit
 
 - Batterie 18650
