@@ -49,6 +49,14 @@ Les cavaliers JP2 à JP4 règlent l'adresse CAN de la carte. JP2 vaut 1, JP3 vau
 
 Un doute sur la soudure ? L'atelier [soudure](/supports-ateliers/semaine-elec/soudure) couvre les bases.
 
+## Arrêt d'urgence (EMS)
+
+Le connecteur SW2 attend un contact sec vers la masse, par exemple un bouton d'arrêt d'urgence. Au repos le contact est ouvert et l'entrée reste haute grâce à la pull-up interne de l'ESP32. Quand on appuie, le contact tire l'entrée à la masse. La pull-up doit être activée dans le firmware, et il ne faut jamais envoyer de tension sur cette broche.
+
+## Switch DIP (SW5)
+
+SW5 regroupe quatre interrupteurs, chacun reliant une entrée du microcontrôleur à la masse quand il est fermé. Le firmware les lit au démarrage avec la pull-up interne activée. Ce que représentent ces quatre bits est défini par le firmware de la carte.
+
 ## Téléchargements
 
 - [Schéma PDF](/files/pcb/cnfx-cb-esp32s3-1/cnfx-cb-esp32s3-1-schematic.pdf)
