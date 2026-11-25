@@ -61,6 +61,14 @@ Le connecteur SW2 attend un contact sec vers la masse, par exemple un bouton d'a
 
 SW5 regroupe quatre interrupteurs, chacun reliant une entrée du microcontrôleur à la masse quand il est fermé. Le firmware les lit au démarrage avec la pull-up interne activée. Ce que représentent ces quatre bits est défini par le firmware de la carte.
 
+## Buzzer
+
+Le buzzer BZ1 est un modèle magnétique MLT-5020. Il est monté entre le 3,3 V et un transistor Q1, lui-même piloté par le signal BUZZER du microcontrôleur. Le GPIO ne sort donc pas le courant du buzzer, il commande seulement le transistor.
+
+Un buzzer magnétique a besoin d'un signal alternatif. Il faut lui envoyer un signal carré ou un PWM à sa fréquence de résonance, donnée dans la datasheet du MLT-5020. Un niveau continu ne produit qu'un clic. Le volume se règle avec le rapport cyclique du PWM.
+
+Le signal BUZZER n'est pas sorti sur le header J7, il est déjà câblé sur la carte.
+
 ## GPIO libres (J7)
 
 Le header J7 sort les GPIO qui restent disponibles, avec du 5 V, du 3,3 V et deux masses pour alimenter un petit montage. Les numéros sont marqués sur la sérigraphie de la carte.
