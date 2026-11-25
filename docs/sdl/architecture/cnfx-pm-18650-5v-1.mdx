@@ -36,6 +36,17 @@ Ne retirez pas l'accumulateur 18650 de son support. Une cellule 18650 peut débi
 
 [Télécharger le schéma complet (PDF)](/files/pcb/cnfx-pm-18650-5v-1/cnfx-pm-18650-5v-1-schematic.pdf)
 
+## LED de charge
+
+Quatre LED indiquent l'état de la batterie et de la charge.
+
+- **PG** (verte) s'allume quand l'USB fournit une tension correcte.
+- **STAT** (verte) s'allume pendant la charge.
+- **EMPTY** (rouge) s'allume quand la batterie descend sous le seuil bas.
+- **FULL** (verte) s'allume quand la batterie est au-dessus du seuil haut.
+
+PG et STAT sont pilotées par le chargeur BQ25606, EMPTY et FULL par le comparateur TPS3701. Les seuils de EMPTY et FULL sont fixés par les résistances autour du comparateur.
+
 ## Connecteurs à souder
 
 Le reste de la carte est déjà assemblé, seuls les connecteurs traversants sont à souder.
