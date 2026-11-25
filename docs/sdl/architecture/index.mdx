@@ -24,6 +24,8 @@ La carte de contrôle, le driver et la carte capteurs se parlent par un bus CAN.
 
 Le bus se câble en chaîne. Chacune a deux connecteurs CAN, un qui vient de la carte précédente et un qui repart vers la suivante, et on branche les cartes l'une après l'autre.
 
+Les deux connecteurs CAN d'une carte sont câblés en parallèle sur le même CANH et le même CANL, et peu importe lequel sert à l'arrivée ou au départ. Il n'y a pas de câble en Y à fabriquer, la carte fait déjà la jonction.
+
 Chaque carte répond à une adresse de 0 à 7, choisie par les cavaliers ADDR0 à ADDR2. Deux cartes avec la même adresse se gênent sur le bus, donc chacune doit avoir la sienne.
 
 :::note
