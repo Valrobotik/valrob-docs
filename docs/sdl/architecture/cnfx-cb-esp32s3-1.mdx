@@ -69,6 +69,12 @@ Un buzzer magnétique a besoin d'un signal alternatif. Il faut lui envoyer un si
 
 Le signal BUZZER n'est pas sorti sur le header J7, il est déjà câblé sur la carte.
 
+## Bandeau RGB (J3)
+
+Le connecteur J3 est un JST PH 2,00 mm à 3 broches prévu pour un bandeau de LED adressables type WS2812B. La broche 1 est la masse, la broche 2 le signal de données et la broche 3 le 5 V, donc le bandeau est alimenté par la carte.
+
+Les données viennent du signal RGB2 du microcontrôleur, qui n'est pas un des GPIO libres de J7. Il se pilote avec une bibliothèque classique comme FastLED ou Adafruit NeoPixel, en envoyant les couleurs sur ce GPIO.
+
 ## GPIO libres (J7)
 
 Le header J7 sort les GPIO qui restent disponibles, avec du 5 V, du 3,3 V et deux masses pour alimenter un petit montage. Les numéros sont marqués sur la sérigraphie de la carte.
