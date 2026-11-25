@@ -34,7 +34,7 @@ Comme le kit ne contient qu'une carte de chaque type, la valeur choisie n'a pas 
 
 En théorie, il faut fermer le cavalier de terminaison aux deux extrémités de la chaîne. Les cavaliers s'appellent JP1 sur la carte de contrôle et sur le driver, et JP4 sur la carte capteurs. Ils ajoutent une résistance de 120 Ω entre CANH et CANL pour absorber le signal au bout du câble et éviter qu'il reparte en écho. Les cartes du milieu laissent leur cavalier ouvert, sinon la résistance de l'ensemble devient trop faible et le bus ne fonctionne plus.
 
-![Bus CAN en chaîne, terminé par une résistance de 120 Ω à chaque extrémité](./img/can-bus.svg)
+![Bus CAN en chaîne, avec un cavalier et une résistance de 120 Ω sur chaque carte](./img/can-bus.svg)
 
 En pratique, les câbles du robot sont courts, et deux cavaliers fermés n'importe où sur la chaîne suffisent, pas forcément ceux des deux cartes aux extrémités. Il ne faut simplement pas en fermer plus. Avec des câbles plus longs, il vaut mieux revenir à une terminaison aux deux extrémités.
 

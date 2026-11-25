@@ -1,45 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="960" height="340" role="img" aria-label="Bus CAN en chaîne avec terminaisons de 120 ohms aux extrémités">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 350" width="960" height="350" role="img" aria-label="Bus CAN en chaîne, avec un cavalier de terminaison et une résistance de 120 ohms sur chaque carte">
   <g>
     <rect x="150" y="30" width="200" height="64" rx="8" fill="#ffffff" stroke="#852e2e" stroke-width="2"/>
-    <text x="250.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="14" font-weight="700" fill="#1b1b1d">CNFX CB ESP32S3 1</text>
+    <text x="250.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="15" font-weight="700" fill="#1b1b1d">CNFX CB ESP32S3 1</text>
     <text x="250.0" y="77" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#6b6b6b">carte de contrôle</text>
   </g>
   <g>
     <rect x="380" y="30" width="200" height="64" rx="8" fill="#ffffff" stroke="#852e2e" stroke-width="2"/>
-    <text x="480.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="14" font-weight="700" fill="#1b1b1d">CNFX DC Quad Driver 1</text>
+    <text x="480.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="15" font-weight="700" fill="#1b1b1d">CNFX DC Quad Driver 1</text>
     <text x="480.0" y="77" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#6b6b6b">driver moteurs</text>
   </g>
   <g>
     <rect x="610" y="30" width="200" height="64" rx="8" fill="#ffffff" stroke="#852e2e" stroke-width="2"/>
-    <text x="710.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="14" font-weight="700" fill="#1b1b1d">CNFX Line Sensor 1</text>
+    <text x="710.0" y="57" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="15" font-weight="700" fill="#1b1b1d">CNFX Line Sensor 1</text>
     <text x="710.0" y="77" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#6b6b6b">capteurs de ligne</text>
   </g>
-  <line x1="70" y1="225" x2="890" y2="225" stroke="#b3261e" stroke-width="3"/>
-  <line x1="70" y1="262" x2="890" y2="262" stroke="#1d4ed8" stroke-width="3"/>
-  <text x="76" y="216" font-family="Noto Sans, sans-serif" font-size="12" fill="#b3261e">CANH</text>
-  <text x="76" y="278" font-family="Noto Sans, sans-serif" font-size="12" fill="#1d4ed8">CANL</text>
-  <line x1="230" y1="94" x2="230" y2="225" stroke="#1b1b1d" stroke-width="2"/>
-  <circle cx="230" cy="225" r="4" fill="#1b1b1d"/>
-  <path d="M 270 94 L 270 211 a 12 12 0 0 1 0 24 L 270 262" stroke="#1b1b1d" stroke-width="2" fill="none"/>
-  <circle cx="270" cy="262" r="4" fill="#1b1b1d"/>
-  <line x1="460" y1="94" x2="460" y2="225" stroke="#1b1b1d" stroke-width="2"/>
-  <circle cx="460" cy="225" r="4" fill="#1b1b1d"/>
-  <path d="M 500 94 L 500 211 a 12 12 0 0 1 0 24 L 500 262" stroke="#1b1b1d" stroke-width="2" fill="none"/>
-  <circle cx="500" cy="262" r="4" fill="#1b1b1d"/>
-  <line x1="690" y1="94" x2="690" y2="225" stroke="#1b1b1d" stroke-width="2"/>
-  <circle cx="690" cy="225" r="4" fill="#1b1b1d"/>
-  <path d="M 730 94 L 730 211 a 12 12 0 0 1 0 24 L 730 262" stroke="#1b1b1d" stroke-width="2" fill="none"/>
-  <circle cx="730" cy="262" r="4" fill="#1b1b1d"/>
-  <g stroke="#1b1b1d" stroke-width="2.5" fill="none">
-    <line x1="120" y1="225" x2="120" y2="233"/>
-    <rect x="112" y="233" width="16" height="22" fill="#ffffff"/>
-    <line x1="120" y1="255" x2="120" y2="262"/>
-  </g>
-  <text x="120" y="296" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="12" fill="#1b1b1d">120 Ω</text>
-  <g stroke="#1b1b1d" stroke-width="2.5" fill="none">
-    <line x1="840" y1="225" x2="840" y2="233"/>
-    <rect x="832" y="233" width="16" height="22" fill="#ffffff"/>
-    <line x1="840" y1="255" x2="840" y2="262"/>
-  </g>
-  <text x="840" y="296" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="12" fill="#1b1b1d">120 Ω</text>
+  <line x1="70" y1="235" x2="890" y2="235" stroke="#b3261e" stroke-width="3"/>
+  <line x1="70" y1="272" x2="890" y2="272" stroke="#1d4ed8" stroke-width="3"/>
+  <text x="76" y="226" font-family="Noto Sans, sans-serif" font-size="12" fill="#b3261e">CANH</text>
+  <text x="76" y="290" font-family="Noto Sans, sans-serif" font-size="12" fill="#1d4ed8">CANL</text>
+  <line x1="190" y1="94" x2="190" y2="235" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="190" cy="235" r="4" fill="#1b1b1d"/>
+  <path d="M 310 94 L 310 221 a 12 12 0 0 1 0 24 L 310 272" stroke="#1b1b1d" stroke-width="2" fill="none"/>
+  <circle cx="310" cy="272" r="4" fill="#1b1b1d"/>
+  <line x1="420" y1="94" x2="420" y2="235" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="420" cy="235" r="4" fill="#1b1b1d"/>
+  <path d="M 540 94 L 540 221 a 12 12 0 0 1 0 24 L 540 272" stroke="#1b1b1d" stroke-width="2" fill="none"/>
+  <circle cx="540" cy="272" r="4" fill="#1b1b1d"/>
+  <line x1="650" y1="94" x2="650" y2="235" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="650" cy="235" r="4" fill="#1b1b1d"/>
+  <path d="M 770 94 L 770 221 a 12 12 0 0 1 0 24 L 770 272" stroke="#1b1b1d" stroke-width="2" fill="none"/>
+  <circle cx="770" cy="272" r="4" fill="#1b1b1d"/>
+  <circle cx="190" cy="150" r="4" fill="#1b1b1d"/>
+  <line x1="190" y1="150" x2="198" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="198" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <rect x="220" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <line x1="208" y1="150" x2="220" y2="150" stroke="#1b1b1d" stroke-width="3"/>
+  <line x1="230" y1="150" x2="240" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="240" y="143" width="30" height="14" rx="2" fill="#ffffff" stroke="#1b1b1d" stroke-width="2"/>
+  <line x1="270" y1="150" x2="310" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="310" cy="150" r="4" fill="#1b1b1d"/>
+  <text x="255" y="172" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#1b1b1d">120 Ω</text>
+  <text x="250" y="188" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" fill="#6b6b6b">cavalier fermé</text>
+  <circle cx="420" cy="150" r="4" fill="#1b1b1d"/>
+  <line x1="420" y1="150" x2="428" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="428" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <rect x="450" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <line x1="438" y1="150" x2="446" y2="141" stroke="#1b1b1d" stroke-width="2"/>
+  <line x1="460" y1="150" x2="470" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="470" y="143" width="30" height="14" rx="2" fill="#ffffff" stroke="#1b1b1d" stroke-width="2"/>
+  <line x1="500" y1="150" x2="540" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="540" cy="150" r="4" fill="#1b1b1d"/>
+  <text x="485" y="172" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#1b1b1d">120 Ω</text>
+  <text x="480" y="188" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" fill="#6b6b6b">cavalier ouvert</text>
+  <circle cx="650" cy="150" r="4" fill="#1b1b1d"/>
+  <line x1="650" y1="150" x2="658" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="658" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <rect x="680" y="144" width="10" height="12" rx="2" fill="#1b1b1d"/>
+  <line x1="668" y1="150" x2="680" y2="150" stroke="#1b1b1d" stroke-width="3"/>
+  <line x1="690" y1="150" x2="700" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <rect x="700" y="143" width="30" height="14" rx="2" fill="#ffffff" stroke="#1b1b1d" stroke-width="2"/>
+  <line x1="730" y1="150" x2="770" y2="150" stroke="#1b1b1d" stroke-width="2"/>
+  <circle cx="770" cy="150" r="4" fill="#1b1b1d"/>
+  <text x="715" y="172" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="11" fill="#1b1b1d">120 Ω</text>
+  <text x="710" y="188" text-anchor="middle" font-family="Noto Sans, sans-serif" font-size="10" fill="#6b6b6b">cavalier fermé</text>
 </svg>
