@@ -15,18 +15,18 @@ Elle reçoit son 5 V par J1 et le convertit en 3,3 V pour l'ESP32. Le connecteur
 - ESP32-S3FN8, 8 Mo de flash, Wi-Fi et Bluetooth, antenne céramique
 - USB-C pour l'alimentation et l'USB natif de l'ESP32
 - Transceiver CAN SN65HVD230
-- Alimentation 5 V par J1, protection par eFuse TPS259472A, régulateur 3,3 V LDL212
-- Buzzer magnétique et LED RGB WS2812B
-- Sortie pour bandeau RGB sur JST PH 3 broches (J3)
+- Alimentation 5 V par J1, protection par eFuse TPS259472A, régulateur 3,3 V AP7361C
+- Buzzer magnétique MLT-5020 et LED RGB WS2812B
+- Sortie pour bandeau RGB sur JST PH 3 broches (J5)
 - Entrée d'arrêt d'urgence sur JST XH 2 broches (SW2)
-- DIP switch 4 bits (SW5) et cavaliers d'adresse
-- Header J7 avec six GPIO libres, du 5 V, du 3,3 V et deux masses
+- DIP switch 4 bits (SW5) et cavaliers d'adresse (JP2 à JP4)
+- Header J6 avec six GPIO libres, du 5 V, du 3,3 V et deux masses
 - Boutons BOOT, RST et BTN
-- PCB en cours de conception
+- PCB 50 × 40 mm, 4 couches, révision 01
 
 ## Vue 3D
 
-En cours.
+![Rendu 3D de la carte de contrôle](./img/cnfx-cb-esp32s3-1/render.png)
 
 ## Schéma
 
@@ -38,16 +38,21 @@ Pour retrouver le GPIO à utiliser dans le code pour l'arrêt d'urgence, la LED 
 
 ## Connecteurs à souder
 
-Le reste de la carte est déjà assemblé, seuls les connecteurs traversants sont à souder. La liste reste à confirmer tant que le PCB n'est pas finalisé.
+Le reste de la carte est déjà assemblé, seuls les connecteurs traversants sont à souder.
 
 | Référence | Connecteur | Broches | Rôle |
 | --- | --- | --- | --- |
-| J1 | JST XH 3 broches | 1 : +5 V, 2 : GND, 3 : non connecté | Alimentation de la carte |
-| J3 | JST PH 3 broches | 1 : GND, 2 : RGB2, 3 : +5 V | Bandeau RGB |
+| J1 | JST XH 3 broches | 1 : +5 V, 2 : GND | Alimentation de la carte |
+| J3 | JST XH 2 broches | 1 : CANL, 2 : CANH | Bus CAN |
 | J4 | JST XH 2 broches | 1 : CANL, 2 : CANH | Bus CAN |
-| J5 | JST XH 2 broches | 1 : CANL, 2 : CANH | Bus CAN |
-| J7 | Header 1×10 | GPIO, 5 V, 3,3 V et GND | GPIO libres |
+| J5 | JST PH 3 broches | 1 : GND, 2 : RGB2, 3 : +5 V | Bandeau RGB |
+| J6 | Header 2×05, 2,54 mm | GPIO9 à GPIO14, 5 V, 3,3 V et deux GND | GPIO libres |
+| JP1 | Cavalier 1×2, 2,54 mm | Ferme la résistance de 120 Ω | Terminaison CAN |
 | SW2 | JST XH 2 broches | 1 : GND, 2 : EMS | Arrêt d'urgence |
+
+Le connecteur USB-C (J2) est un composant CMS, il est déjà monté.
+
+La troisième broche de J1 n'alimente rien. C'est une entrée de mesure de tension, ramenée au convertisseur analogique par un diviseur.
 
 Les cavaliers JP2 à JP4 règlent l'adresse CAN de la carte. JP2 vaut 1, JP3 vaut 2 et JP4 vaut 4, ce qui donne une adresse entre 0 et 7. Donnez une adresse différente à chaque carte du bus.
 
@@ -67,24 +72,38 @@ Le buzzer BZ1 est un modèle magnétique MLT-5020. Il est monté entre le 3,3 V 
 
 Un buzzer magnétique a besoin d'un signal alternatif. Il faut lui envoyer un signal carré ou un PWM à sa fréquence de résonance, donnée dans la datasheet du MLT-5020. Un niveau continu ne produit qu'un clic. Le volume se règle avec le rapport cyclique du PWM.
 
-Le signal BUZZER n'est pas sorti sur le header J7, il est déjà câblé sur la carte.
+Le signal BUZZER n'est pas sorti sur le header J6, il est déjà câblé sur la carte.
 
-## Bandeau RGB (J3)
+## Bandeau RGB (J5)
 
-Le connecteur J3 est un JST PH 2,00 mm à 3 broches prévu pour un bandeau de LED adressables type WS2812B. La broche 1 est la masse, la broche 2 le signal de données et la broche 3 le 5 V, donc le bandeau est alimenté par la carte.
+Le connecteur J5 est un JST PH 2,00 mm à 3 broches prévu pour un bandeau de LED adressables type WS2812B. La broche 1 est la masse, la broche 2 le signal de données et la broche 3 le 5 V, donc le bandeau est alimenté par la carte.
 
-Les données viennent du signal RGB2 du microcontrôleur, qui n'est pas un des GPIO libres de J7. Il se pilote avec une bibliothèque classique comme FastLED ou Adafruit NeoPixel, en envoyant les couleurs sur ce GPIO.
+Les données viennent du signal RGB2 du microcontrôleur, qui n'est pas un des GPIO libres de J6. Il se pilote avec une bibliothèque classique comme FastLED ou Adafruit NeoPixel, en envoyant les couleurs sur ce GPIO.
 
-## GPIO libres (J7)
+Deux points à surveiller. Le signal sort en 3,3 V alors que le bandeau est alimenté en 5 V, ce qui marche souvent avec des câbles courts mais peut devenir capricieux, et un level shifter règle le problème. Le courant du bandeau passe aussi par le 5 V de la carte, donc un bandeau long en blanc peut tirer plus que ce que la carte fournit.
 
-Le header J7 sort les GPIO qui restent disponibles, avec du 5 V, du 3,3 V et deux masses pour alimenter un petit montage. Les numéros sont marqués sur la sérigraphie de la carte.
+## GPIO libres (J6)
 
-Les six GPIO libres sont GPIO10, GPIO11, GPIO12, GPIO13, GPIO14 et GPIO17. GPIO15 et GPIO16 ne sont pas sur ce header, ils servent déjà au switch DIP et à l'arrêt d'urgence. Les autres sont utilisés par les boutons, l'adresse CAN, le CAN, l'UART, l'USB et la LED, ou réservés à la mémoire flash.
+Le header J6 est un 2×05 qui sort les GPIO qui restent disponibles, avec du 5 V, du 3,3 V et deux masses pour alimenter un petit montage. Les numéros sont marqués sur la sérigraphie de la carte.
 
-Le 5 V de J7 est celui de la carte et le 3,3 V sort du régulateur. Les entrées sont en 3,3 V, il ne faut pas leur envoyer du 5 V.
+Les six GPIO libres sont GPIO9, GPIO10, GPIO11, GPIO12, GPIO13 et GPIO14. Les autres sont déjà pris par le switch DIP (GPIO15 à GPIO18), l'arrêt d'urgence (GPIO21), les boutons, l'adresse CAN, le CAN, l'USB, la LED et le buzzer, ou réservés à la mémoire flash.
+
+Le 5 V de J6 est celui de la carte et le 3,3 V sort du régulateur. Les entrées sont en 3,3 V, il ne faut pas leur envoyer du 5 V.
+
+## Mesure de tension (Vsense)
+
+L'ESP32 peut mesurer deux tensions en plus de ses entrées numériques.
+
+- `Vsense_5V` mesure l'entrée 5 V de la carte, à travers R14 (10 kΩ) et R11 (1 kΩ).
+- `Vsense_?V` mesure la tension présente sur la broche 3 de J1, à travers R13 (10 kΩ) et R10 (1 kΩ).
+
+Chaque point de mesure est protégé par une diode Zener de 3,3 V (D10, D11) et filtré par un condensateur de 100 nF (C14, C15). Les deux arrivent sur des entrées analogiques de l'ESP32, sur GPIO1 et GPIO2.
+
+À vous de retrouver le rapport des diviseurs pour convertir la lecture de l'ADC en volts.
 
 ## Téléchargements
 
+- [Modèle STEP](/files/pcb/cnfx-cb-esp32s3-1/cnfx-cb-esp32s3-1.step)
 - [Schéma PDF](/files/pcb/cnfx-cb-esp32s3-1/cnfx-cb-esp32s3-1-schematic.pdf)
 - [Fichiers KiCad](https://github.com/Galacs/cnfx-cb-esp32s3-1)
 

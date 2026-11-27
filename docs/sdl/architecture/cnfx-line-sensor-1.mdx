@@ -16,14 +16,19 @@ Elle est fournie à toutes les équipes, que vous ayez pris le kit électronique
 - Courant des LED réglé à 40 mA et modulation PWM
 - Microcontrôleur STM32F103C8T6, Cortex-M3 à 72 MHz
 - Transceiver CAN SN65HVD230
-- Alimentation 5 V par J1, protection par eFuse TPS259472A, régulateur 3,3 V HT753-1
+- Alimentation 5 V par J1, protection par eFuse TPS259472A, régulateur 3,3 V AP7361C
 - Deux connecteurs CAN (J4 et J5) pour chaîner les cartes
+- Header UART (J2) et connecteur SWD TC2030 (J3) pour la programmation
 - Boutons BOOT, BTN1 et NRST
-- PCB en cours de conception
+- PCB 100 × 30 mm, 2 couches, révision 01
 
 ## Vue 3D
 
-En cours.
+![Rendu 3D du dessus de la carte capteurs](./img/cnfx-line-sensor-1/render.png)
+
+Les connecteurs traversants se soudent sous la carte.
+
+![Rendu 3D du dessous de la carte capteurs](./img/cnfx-line-sensor-1/render-bottom.png)
 
 ## Schéma
 
@@ -33,20 +38,25 @@ En cours.
 
 ## Connecteurs à souder
 
-Le reste de la carte est déjà assemblé, seuls les connecteurs traversants sont à souder. La liste reste à confirmer tant que le PCB n'est pas finalisé.
+Tous les connecteurs traversants sont sous la carte, comme sur le rendu du dessous.
 
 | Référence | Connecteur | Broches | Rôle |
 | --- | --- | --- | --- |
 | J1 | JST XH 3 broches | 1 : +5 V, 2 : GND, 3 : non connecté | Alimentation de la carte |
+| J2 | Header 1×4, 2,54 mm | 1 : +3,3 V, 2 : U0RXD, 3 : GND, 4 : U0TXD | UART de debug |
 | J4 | JST XH 2 broches | 1 : CANL, 2 : CANH | Bus CAN |
 | J5 | JST XH 2 broches | 1 : CANL, 2 : CANH | Bus CAN |
+| JP4 | Cavalier 1×2, 2,54 mm | Ferme la résistance de 120 Ω | Terminaison CAN |
 
-Les cavaliers JP1 à JP3 règlent l'adresse CAN de la carte. JP1 vaut 1, JP2 vaut 2 et JP3 vaut 4, ce qui donne une adresse entre 0 et 7. JP4 ferme la terminaison de 120 Ω du bus. Donnez une adresse différente à chaque carte.
+Le connecteur SWD J3 est un Tag-Connect TC2030. Il ne se soude pas, on le contacte avec un câble adapté.
+
+Les cavaliers JP1 à JP3 règlent l'adresse CAN de la carte. JP1 vaut 1, JP2 vaut 2 et JP3 vaut 4, ce qui donne une adresse entre 0 et 7. Donnez une adresse différente à chaque carte.
 
 Un doute sur la soudure ? L'atelier [soudure](/supports-ateliers/semaine-elec/soudure) couvre les bases.
 
 ## Téléchargements
 
+- [Modèle STEP](/files/pcb/cnfx-line-sensor-1/cnfx-line-sensor-1.step)
 - [Schéma PDF](/files/pcb/cnfx-line-sensor-1/cnfx-line-sensor-1-schematic.pdf)
 - [Fichiers KiCad](https://github.com/Galacs/cnfx-line-sensor-1)
 
