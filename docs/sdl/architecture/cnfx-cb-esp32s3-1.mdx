@@ -10,6 +10,10 @@ La carte de contrôle fait tourner le programme du robot. L'ESP32-S3 discute ave
 
 Elle reçoit son 5 V par J1 et le convertit en 3,3 V pour l'ESP32. Le connecteur USB-C sert à la fois à l'alimentation et à la programmation.
 
+:::note
+Cette carte n'a pas de firmware fourni. C'est vous qui écrivez tout le programme de l'ESP32, en vous appuyant sur les bibliothèques CNFX pour le bus CAN. Le reste (switch DIP, buzzer, LED RGB, arrêt d'urgence, mesures de tension, GPIO libres) est à coder de votre côté.
+:::
+
 ## Spécifications
 
 - ESP32-S3FN8, 8 Mo de flash, Wi-Fi et Bluetooth, antenne céramique
@@ -64,7 +68,7 @@ Le connecteur SW2 attend un contact sec vers la masse, par exemple un bouton d'a
 
 ## Switch DIP (SW5)
 
-SW5 regroupe quatre interrupteurs, chacun reliant une entrée du microcontrôleur à la masse quand il est fermé. Le firmware les lit au démarrage avec la pull-up interne activée. Ce que représentent ces quatre bits est défini par le firmware de la carte.
+SW5 regroupe quatre interrupteurs, chacun reliant une entrée du microcontrôleur à la masse quand il est fermé. Ces quatre bits restent libres pour votre programme, à condition d'activer la pull-up interne sur ces entrées.
 
 ## Buzzer
 
